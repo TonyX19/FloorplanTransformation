@@ -341,13 +341,8 @@ end
 -- run it using PATH=/usr/bin/python
 
 function utils.savePickle(f, t)
-  local py = require 'fb.python'
-  py.exec([=[
-import numpy as np
-import cPickle
-with open(filename, "wb") as outfile:
-    cPickle.dump(variable, outfile, protocol=cPickle.HIGHEST_PROTOCOL)
-]=], {variable = t, filename = f})
+  local os = require 'os'
+  os.execute("python pickle_lua.py --filename="..f.." --variable="..t)
 end
 
 --
