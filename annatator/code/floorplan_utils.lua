@@ -3,8 +3,10 @@ require 'image'
 local pl = require 'pl.import_into' ()
 --cv = require 'cv'
 --require 'cv.imgproc'
---py = require('python')
+-- py = require('python')
 --paths.dofile('/home/chenliu/Projects/Floorplan/floorplan/InverseCAD/models/SpatialSymmetricPadding.lua')
+require 'os'
+
 
 local utils = {}
 
@@ -4083,8 +4085,7 @@ function utils.reconstructFloorplan(pointcloud)
    end
    pointcloudFile:close()
 
-   py.execute('import os')
-   py.execute('os.system("python ' .. predictionDir .. '/predict.py")')
+   os.execute("python ' .. predictionDir .. '/predict.py")
    return
 end
 
@@ -4278,10 +4279,10 @@ function utils.invertFloorplan(floorplan, withoutQP, relaxedQP, useStack)
 
 
    local representation = {}
-   py.execute('import os')
+   -- py.execute('import os')
 
    if withoutQP then
-      py.execute('os.system("python ../InverseCAD/PostProcessing/QP.py 1")')
+      os.execute("python ../InverseCAD/PostProcessing/QP.py 1")
       representation.points = utils.loadItems('test/points_out.txt')
       representation.doors = utils.loadItems('test/doors_out.txt')
       representation.icons = utils.loadItems('test/icons_out.txt')
@@ -4335,9 +4336,9 @@ function utils.invertFloorplan(floorplan, withoutQP, relaxedQP, useStack)
    end
 
    if relaxedQP then
-      py.execute('os.system("python ../InverseCAD/PostProcessing/QP_clean.py")')
+      os.execute("python ../InverseCAD/PostProcessing/QP_clean.py")
    else
-      py.execute('os.system("python ../InverseCAD/PostProcessing/QP.py")')
+      os.execute("python ../InverseCAD/PostProcessing/QP.py")
    end
 
 
@@ -4792,8 +4793,7 @@ function utils.findWallsPrediction(floorplan)
          --utils.filterJunctions(oriWidth, oriHeight, points, wallMask)
          --end
 
-         py.execute('import os')
-         py.execute('os.system("python ../InverseCAD/PostProcessing/QP_backup.py")')
+         os.execute("python ../InverseCAD/PostProcessing/QP_backup.py")
          --os.exit(1)
          points = utils.loadItems('test/points_out.txt')
          if true then
@@ -5843,8 +5843,7 @@ function utils.getRoomSegmentationQP(width, height, representation, lineWidth, f
    end
    image.save('test/segment_0.png', torch.zeros(height, width))
 
-   py.execute('import os')
-   local ret = py.execute('os.system("python ../InverseCAD/PostProcessing/QP_segmentation.py")')
+   local ret = os.execute("python ../InverseCAD/PostProcessing/QP_segmentation.py")
 
 
    local floorplanSegmentation = torch.zeros(height, width)
