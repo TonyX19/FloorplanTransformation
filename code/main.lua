@@ -10,8 +10,7 @@ require 'optim'
 require 'image'
 --require 'models'
 
---first commit
-
+--first commit tony
 
 local opts = require 'opts'
 local opt = opts.parse(arg)
